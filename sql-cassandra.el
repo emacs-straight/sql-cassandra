@@ -5,7 +5,7 @@
 ;; Author: Filipp Gunbin <fgunbin@fastmail.fm>
 ;; Maintainer: Filipp Gunbin <fgunbin@fastmail.fm>
 ;; Package-Requires: ((emacs "29"))
-;; Version: 0.2
+;; Version: 0.2.1
 ;; Keywords: sql, cassandra, cql, cqlsh
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -48,7 +48,7 @@
   :group 'SQL)
 
 
-(eval-when-compile
+(eval-and-compile
   (defconst sql-cassandra-special-commands
     '("capture" "cls" "copy" "describe" "expand" "login" "serial"
       "source" "unicode" "clear" "consistency" "desc" "exit" "help"
@@ -56,8 +56,9 @@
     "Special commands recognized by cqlsh.
 
 Refer to:
-https://cassandra.apache.org/doc/latest/cassandra/tools/cqlsh.html#special-commands")
+https://cassandra.apache.org/doc/latest/cassandra/tools/cqlsh.html#special-commands"))
 
+(eval-when-compile
   (defconst sql-cassandra-native-types
     '("ascii" "bigint" "blob" "boolean" "counter" "date" "decimal"
       "double" "duration" "float" "inet" "int" "smallint" "text" "time"
@@ -152,6 +153,9 @@ Refer to https://cassandra.apache.org/doc/latest/cassandra/cql/appendices.html#a
   "Run Cassandra client as an inferior process."
   (interactive "P")
   (sql-product-interactive 'cassandra buffer))
+
+;;;###autoload
+(add-to-list 'auto-mode-alist '("\\.cql\\'" . sql-mode))
 
 (sql-add-product
  'cassandra "Cassandra"
